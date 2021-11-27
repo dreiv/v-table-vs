@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { genId } from "@/utils";
 import { Student, State } from "./types";
 
-export const useMainStore = defineStore("mainStore", {
+export const useStore = defineStore("mainStore", {
   state: (): State => ({
     students: [],
     selectedStudent: null,
