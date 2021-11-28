@@ -11,7 +11,7 @@
   @include flex-column();
   @include box(100%);
 
-  max-width: 60rem;
+  max-width: 62rem;
   margin: 0 auto;
   padding: var(--space-md) var(--space-xs);
 }

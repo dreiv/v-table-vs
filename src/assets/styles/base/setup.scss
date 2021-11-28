@@ -14,11 +14,16 @@
   --onSurface: #333;
   --background: #f6f8fa;
   --border-radius: 0.25rem;
-  --line-height: 1.618;
 
   @include breakpoint(md) {
-    :root {
-      --space-unit:  1.25em;
-    }
+    --space-unit: 1.25em;
   }
+}
+
+body {
+  color: var(--onSurface);
+  font-family: Roboto, Segoe UI, BlinkMacSystemFont, system-ui,
+    -apple-system sans-serif;
+  background-color: var(--background);
+  -webkit-font-smoothing: antialiased;
 }

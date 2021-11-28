@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import StudentsComponent from './components/StudentsComponent.vue'
-import DefaultLayout from './layouts/DefaultLayout.vue'
+import { DefaultLayout } from '@/layouts'
+import { Dashboard } from '@/views'
 </script>
 
 <template>
   <component :is="DefaultLayout">
-    <StudentsComponent />
+    <Dashboard />
   </component>
 </template>
