@@ -1,0 +1,30 @@
+$breakpoints: (
+  // 400px
+  "xs": 25em,
+  // 544px
+  "sm": 34em,
+  // 768px
+  "md": 48em,
+  // 960px
+  "lg": 60em,
+  // 1280px
+  "xl": 80em,
+  // 1440px
+  "xxl": 90em
+);
+
+@mixin breakpoint($point) {
+  // If the breakpoint exists in the map.
+  @if map-has-key($breakpoints, $point) {
+    // Get the breakpoint value.
+    $breakpoint-value: map-get($breakpoints, $point);
+    // Write the media query.
+    @media (min-width: $breakpoint-value) {
+      @content;
+    }
+    // If the breakpoint doesn't exist in the map.
+  } @else {
+    // Log a warning.
+    @warn 'Invalid breakpoint: #{$point}.';
+  }
+}

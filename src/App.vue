@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import StudentsComponent from './components/StudentsComponent.vue'
+import DefaultLayout from './layouts/DefaultLayout.vue'
 </script>
 
 <template>
-  <StudentsComponent />
+  <component :is="DefaultLayout">
+    <StudentsComponent />
+  </component>
 </template>
