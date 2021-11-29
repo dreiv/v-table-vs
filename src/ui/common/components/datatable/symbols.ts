@@ -1,11 +1,11 @@
-import { InjectionKey } from "vue";
+import { InjectionKey, Ref } from "vue";
 import { DataTableColumn, DataTableRow } from "./types";
 
-export interface DataTableState {
-  columns?: DataTableColumn[];
-  rows?: DataTableRow[];
+export interface DataTableContext {
+  columns: DataTableColumn[];
+  rows: DataTableRow[];
 }
 
-export const DataTableKey: InjectionKey<DataTableState> = Symbol(
+export const DataTableKey: InjectionKey<Ref<DataTableContext>> = Symbol(
   "DataTable state provider identifier"
 );

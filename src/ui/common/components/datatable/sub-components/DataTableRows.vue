@@ -2,11 +2,11 @@
 import { inject } from "vue";
 import { DataTableKey } from "../symbols";
 
-const { columns, rows } = inject(DataTableKey, {});
+const context = inject(DataTableKey);
 </script>
 
 <template>
-  <tr v-for="row in rows">
-    <td v-for="{ key } in columns">{{ row[key] }}</td>
+  <tr v-for="row in context?.rows">
+    <td v-for="{ key } in context?.columns">{{ row[key] }}</td>
   </tr>
 </template>
