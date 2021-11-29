@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Datatable } from '@/common'
+import { Datatable } from '@/ui/common'
 </script>
 
 <template>

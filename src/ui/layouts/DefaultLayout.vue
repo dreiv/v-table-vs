@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss" module>
-@import "@/assets/styles/abstracts";
+@import "@/ui/assets/styles/abstracts";
 
 .layout {
   @include flex-column();

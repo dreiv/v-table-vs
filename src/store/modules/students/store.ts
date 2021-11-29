@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { genId } from "@/utils";
+import { genId } from "@/helpers";
 import { Student, State } from "./types";
 
 export const useStore = defineStore("mainStore", {

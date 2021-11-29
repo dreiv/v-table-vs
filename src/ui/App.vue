@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { DefaultLayout } from '@/layouts'
-import { Dashboard } from '@/views'
+import { DefaultLayout } from '@/ui/layouts'
+import { Dashboard } from '@/ui/views'
 </script>
 
 <template>
