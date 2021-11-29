@@ -6,14 +6,14 @@ import { Datatable } from '@/common'
   <header>
     <h1>Table</h1>
   </header>
-  <main>
+  <main :class="$style.main">
     <Datatable />
   </main>
   <footer>Footer</footer>
 </template>
 
-<style lang="scss">
-main {
+<style lang="scss" module>
+.main {
   flex: 1;
 }
 </style>

@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import { defineProps, PropType } from "vue";
+import { DataTableColumn } from "./types";
+
+const props = defineProps({
+  columns: {
+    type: Array as PropType<DataTableColumn[]>,
+    default: () => [],
+  },
+})
+</script>
+
 <template>
   <table>
     <tr>

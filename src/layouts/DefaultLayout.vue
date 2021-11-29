@@ -1,10 +1,10 @@
 <template>
-  <div class="layout">
+  <div :class="$style.layout">
     <slot />
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" module>
 @import "@/assets/styles/abstracts";
 
 .layout {
