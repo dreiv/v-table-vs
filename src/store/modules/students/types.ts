@@ -4,7 +4,7 @@ export interface Student {
   section: string;
 }
 
-export interface State {
+export interface StudentState {
   students: Student[];
   selectedStudent: Student | null;
 }

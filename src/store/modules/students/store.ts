@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
 
 import { genId } from "@/helpers";
-import { Student, State } from "./types";
+import { Student, StudentState } from "./types";
 
-export const useStore = defineStore("mainStore", {
-  state: (): State => ({
+export const useMainStore = defineStore("mainStore", {
+  state: (): StudentState => ({
     students: [],
     selectedStudent: null,
   }),

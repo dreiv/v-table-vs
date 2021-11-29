@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { Datatable } from '@/ui/common'
+import { DataTable } from '@/ui/common';
+import { useDataTableStore } from '@/store';
+
+const store = useDataTableStore();
+
 </script>
 
 <template>
@@ -7,7 +11,9 @@ import { Datatable } from '@/ui/common'
     <h1>Table</h1>
   </header>
   <main :class="$style.main">
-    <Datatable />
+    <data-table
+      :columns="store.columns"
+    />
   </main>
   <footer>Footer</footer>
 </template>

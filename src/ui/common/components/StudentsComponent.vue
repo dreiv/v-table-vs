@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useStore, Student } from '@/store';
+import { useMainStore, Student } from '@/store';
 
 // get the store
-const store = useStore();
+const store = useMainStore();
 
 // subscribe to changes on store
 // .....

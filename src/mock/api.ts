@@ -16,6 +16,6 @@ export const API = {
         records,
       };
 
-      setTimeout(() => resolve(data), latency());
+      setTimeout(() => resolve(response), latency());
     }),
 };
