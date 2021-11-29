@@ -3,6 +3,7 @@ import { DataTable } from '@/ui/common';
 import { useDataTableStore } from '@/store';
 
 const store = useDataTableStore();
+store.fetchRows();
 
 </script>
 
@@ -13,6 +14,7 @@ const store = useDataTableStore();
   <main :class="$style.main">
     <data-table
       :columns="store.columns"
+      :rows="store.rows"
     />
   </main>
   <footer>Footer</footer>

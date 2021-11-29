@@ -1,5 +1,6 @@
-import { DataTableColumn } from "@/ui/common";
+import { DataTableColumn, DataTableRow } from "@/ui/common";
 
 export interface DataTableState {
   columns: DataTableColumn[];
+  rows: DataTableRow[];
 }

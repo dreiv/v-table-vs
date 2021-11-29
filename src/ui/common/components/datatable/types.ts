@@ -1,5 +1,8 @@
 export interface DataTableColumn {
-  id: string;
   key: string;
-  title: string;
+  text: string;
+}
+export interface DataTableRow {
+  id: string;
+  [key: string]: any;
 }
