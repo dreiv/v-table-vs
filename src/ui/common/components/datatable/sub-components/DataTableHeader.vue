@@ -8,7 +8,7 @@ const context = inject(DataTableKey);
 </script>
 
 <template>
-  <tr>
+  <tr :class="$style.sticky">
     <th v-for="{ key, text } in context?.columns" :key="key" :class="$style.header">
       {{ text }}
       <data-table-header-resize-handle />
@@ -19,5 +19,11 @@ const context = inject(DataTableKey);
 <style lang="scss" module>
 .header {
   position: relative;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  background-color: var(--surface);
 }
 </style>

@@ -19,8 +19,24 @@ provide(DataTableKey, ref(props));
 </script>
 
 <template>
-  <table>
+  <table :class="$style.dataTable">
     <data-table-header />
     <data-table-rows />
   </table>
 </template>
+
+<style lang="scss" module>
+@import "@/ui/assets/styles/abstracts";
+
+.dataTable {
+  position: relative;
+
+  &:after {
+    content: "";
+    @include absolute(0, 0, 0, null);
+
+    width: 1px;
+    background-color: lime;
+  }
+}
+</style>

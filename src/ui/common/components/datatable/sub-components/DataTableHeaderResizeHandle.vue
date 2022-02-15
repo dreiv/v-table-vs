@@ -47,8 +47,6 @@ function onResize({ buttons, clientX }: MouseEvent) {
 
   &::after {
     content: '';
-    padding-bottom: 100px;
-    margin-bottom: -100px;
     background-color: lime;
   }
 }
