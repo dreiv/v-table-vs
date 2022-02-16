@@ -42,9 +42,9 @@ function onResize({ buttons }: MouseEvent) {
 
 $viewportHeight: 100vh;
 .handle {
-  @include absolute(0, 0, 0, null);
+  @include absolute(0, -2px, 0, null);
 
-  width: 4px;
+  width: 5px;
   background-color: red;
 
   cursor: col-resize;
@@ -52,7 +52,9 @@ $viewportHeight: 100vh;
 
   &::after {
     @include box(1px, $viewportHeight);
+    @include margin-horiz(auto);
     content: '';
+
     display: block;
     box-shadow: 0 $viewportHeight 0 #000;
     margin-top: -$viewportHeight;
