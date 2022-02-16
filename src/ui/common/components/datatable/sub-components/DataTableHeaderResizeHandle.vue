@@ -2,23 +2,27 @@
 import { ref } from "vue";
 import { requestAnimationFrame } from '@/helpers';
 
-let offset = 0;
 const handle = ref<HTMLDivElement | null>(null);
 
-const debounced = requestAnimationFrame(({ clientX }: MouseEvent) => {
+const debounced = requestAnimationFrame(({ clientX }: MouseEvent, offset: number) => {
+  console.log('clientX', clientX);
+  console.log('diff', offset - clientX);
+  console.log('handleOffset',  Math.round(handle.value?.getBoundingClientRect().x || 0))
+
   handle.value && (handle.value.style.right = `${offset - clientX}px`);
 });
 
-function onResize({ buttons, clientX }: MouseEvent) {
+function onResize({ buttons }: MouseEvent) {
   if (buttons !== 1) return;
   const controller = new AbortController();
   const { signal } = controller;
-  offset = handle.value?.getBoundingClientRect().x || 0;
+  const offset = Math.round(handle.value?.getBoundingClientRect().x || 0);
+  console.log('offset', offset);
 
   document.addEventListener('mousemove', e => {
     if (e.buttons !== 1) return;
 
-    debounced(e);
+    debounced(e, offset);
   }, { signal });
 
   document.addEventListener('mouseup', e => {

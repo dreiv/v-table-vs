@@ -9,7 +9,12 @@ const context = inject(DataTableKey);
 
 <template>
   <tr :class="$style.sticky">
-    <th v-for="{ key, text } in context?.columns" :key="key" :class="$style.header">
+    <th
+      v-for="{ key, text, width } in context?.columns"
+      :key="key"
+      :class="$style.header"
+      :width="width"
+    >
       {{ text }}
       <data-table-header-resize-handle />
     </th>

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { DataTable } from '@/ui/common';
-import { useDataTableStore } from '@/store';
+import { DataTable } from "@/ui/common";
+import { useDataTableStore } from "@/store";
 
 const store = useDataTableStore();
 store.fetchRows();
-
 </script>
 
 <template>
@@ -13,11 +12,7 @@ store.fetchRows();
   </header>
   <main :class="$style.main">
     <div :class="$style.wrapper">
-      <data-table
-        :class="$style.wrapper"
-        :columns="store.columns"
-        :rows="store.rows"
-      />
+      <data-table :columns="store.columns" :rows="store.rows" />
     </div>
   </main>
   <footer>Footer</footer>
