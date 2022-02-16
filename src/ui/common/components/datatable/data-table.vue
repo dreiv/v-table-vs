@@ -15,7 +15,18 @@ const props = defineProps({
   },
 });
 
-provide(DataTableKey, ref(props));
+const onResize = () => {
+  console.log("called on resize");
+};
+
+provide(
+  DataTableKey,
+  ref({
+    columns: props.columns,
+    rows: props.rows,
+    onResize,
+  })
+);
 </script>
 
 <template>

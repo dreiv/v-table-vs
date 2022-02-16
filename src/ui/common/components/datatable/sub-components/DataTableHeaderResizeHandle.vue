@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import { requestAnimationFrame } from '@/helpers';
+import { DataTableKey } from "../symbols";
 
 const handle = ref<HTMLDivElement | null>(null);
+const context = inject(DataTableKey);
 
 const moveHandle = requestAnimationFrame(({ clientX }: MouseEvent, offset: number) => {
   console.log('clientX', clientX);
@@ -28,6 +30,7 @@ function onResize({ buttons }: MouseEvent) {
   document.addEventListener('mouseup', e => {
     if (e.buttons & 1) return;
 
+    context?.value.onResize();
     controller.abort();
   }, { signal });
 };
