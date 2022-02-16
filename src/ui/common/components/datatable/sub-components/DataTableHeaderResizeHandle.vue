@@ -4,9 +4,9 @@ import { requestAnimationFrame } from '@/helpers';
 
 const handle = ref<HTMLDivElement | null>(null);
 
-const debounced = requestAnimationFrame(({ clientX }: MouseEvent, offset: number) => {
+const moveHandle = requestAnimationFrame(({ clientX }: MouseEvent, offset: number) => {
   console.log('clientX', clientX);
-  console.log('diff', offset - clientX);
+  console.log('diff', clientX - offset);
   console.log('handleOffset',  Math.round(handle.value?.getBoundingClientRect().x || 0))
 
   handle.value && (handle.value.style.right = `${offset - clientX}px`);
@@ -22,7 +22,7 @@ function onResize({ buttons }: MouseEvent) {
   document.addEventListener('mousemove', e => {
     if (e.buttons !== 1) return;
 
-    debounced(e, offset);
+    moveHandle(e, offset);
   }, { signal });
 
   document.addEventListener('mouseup', e => {
