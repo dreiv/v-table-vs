@@ -30,13 +30,5 @@ provide(DataTableKey, ref(props));
 
 .dataTable {
   position: relative;
-
-  &:after {
-    content: "";
-    @include absolute(0, 0, 0, null);
-
-    width: 1px;
-    background-color: lime;
-  }
 }
 </style>

@@ -40,6 +40,7 @@ function onResize({ buttons }: MouseEvent) {
 <style lang="scss" module>
 @import "@/ui/assets/styles/abstracts";
 
+$viewportHeight: 100vh;
 .handle {
   @include absolute(0, 0, 0, null);
 
@@ -50,8 +51,11 @@ function onResize({ buttons }: MouseEvent) {
   user-select: none;
 
   &::after {
+    @include box(1px, $viewportHeight);
     content: '';
-    background-color: lime;
+    display: block;
+    box-shadow: 0 $viewportHeight 0 #000;
+    margin-top: -$viewportHeight;
   }
 }
 </style>
