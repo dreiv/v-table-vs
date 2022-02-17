@@ -30,7 +30,6 @@ function onResize({ buttons }: MouseEvent) {
   document.addEventListener('mouseup', e => {
     if (e.buttons & 1) return;
 
-    context?.value.onResize();
     controller.abort();
   }, { signal });
 };

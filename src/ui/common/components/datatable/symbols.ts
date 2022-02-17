@@ -4,7 +4,6 @@ import { DataTableColumn, DataTableRow } from "./types";
 export interface DataTableContext {
   columns: DataTableColumn[];
   rows: DataTableRow[];
-  onResize: () => {};
 }
 
 export const DataTableKey: InjectionKey<Ref<DataTableContext>> = Symbol(
