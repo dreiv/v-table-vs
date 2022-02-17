@@ -15,8 +15,8 @@ const props = defineProps({
   },
 });
 
-function onResize() {
-  console.log('resized');
+function onResize(columnKey: string) {
+  console.log('resized', columnKey);
 }
 
 provide(

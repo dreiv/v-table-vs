@@ -16,7 +16,7 @@ const context = inject(DataTableKey);
       :width="width"
     >
       {{ text }}
-      <data-table-header-resize-handle />
+      <data-table-header-resize-handle :columnKey="key" />
     </th>
   </tr>
 </template>
