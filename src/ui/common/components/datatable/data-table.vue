@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import { provide, ref, toRef, PropType } from "vue";
+import { provide, ref, toRef } from "vue";
 
 import { DataTableHeader, DataTableRows } from "./sub-components";
 import { DataTableColumn, DataTableRow, DataTableKey } from ".";
 
-const props = defineProps({
-  columns: {
-    type: Array as PropType<DataTableColumn[]>,
-    default: () => [],
-  },
-  rows: {
-    type: Array as PropType<DataTableRow[]>,
-    default: () => [],
-  },
-});
+const props = defineProps<{
+  columns: DataTableColumn[];
+  rows: DataTableRow[];
+}>();
 
-function onResize(columnKey: string) {
-  console.log('resized', columnKey);
+const emit = defineEmits<{
+  (e: "resize", columnKey: string, updatedWidth: number): void;
+}>();
+
+function onResize(columnKey: string, updatedWidth: number) {
+  emit("resize", columnKey, updatedWidth);
 }
 
 provide(
@@ -24,7 +22,7 @@ provide(
   ref({
     columns: toRef(props, "columns"),
     rows: toRef(props, "rows"),
-    onResize
+    onResize,
   })
 );
 </script>

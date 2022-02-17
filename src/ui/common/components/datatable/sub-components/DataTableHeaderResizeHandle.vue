@@ -6,12 +6,7 @@ import { DataTableKey } from "../symbols";
 const handle = ref<HTMLDivElement>();
 const context = inject(DataTableKey);
 
-const props = defineProps({
-  columnKey: {
-    type: String,
-    required: true,
-  },
-});
+const props = defineProps<{ columnKey: string }>();
 
 const moveHandle = requestAnimationFrame(
   ({ clientX }: MouseEvent, offset: number) => {
@@ -48,7 +43,8 @@ function onResize({ buttons }: MouseEvent) {
     (e) => {
       if (e.buttons & 1) return;
 
-      context?.value.onResize(props.columnKey);
+      const updatedWidth = e.clientX - offset;
+      context?.value.onResize(props.columnKey, updatedWidth);
       controller.abort();
     },
     { signal }

@@ -17,5 +17,16 @@ export const useDataTableStore = defineStore("dataTableStore", {
 
       this.rows = records;
     },
+
+    resizeColumn(columnKey: string, updatedWidth: number) {
+      this.columns = this.columns.map((column) =>
+        column.key === columnKey
+          ? {
+              ...column,
+              width: column.width + updatedWidth,
+            }
+          : column
+      );
+    },
   },
 });
