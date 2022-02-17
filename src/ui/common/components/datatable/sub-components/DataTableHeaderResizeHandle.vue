@@ -4,6 +4,7 @@ import { requestAnimationFrame } from '@/helpers';
 import { DataTableKey } from "../symbols";
 
 const handle = ref<HTMLDivElement | null>(null);
+const context = inject(DataTableKey);
 
 const moveHandle = requestAnimationFrame(({ clientX }: MouseEvent, offset: number) => {
   console.log('clientX', clientX);
@@ -12,6 +13,7 @@ const moveHandle = requestAnimationFrame(({ clientX }: MouseEvent, offset: numbe
 
   handle.value && (handle.value.style.right = `${offset - clientX}px`);
 });
+
 
 function onResize({ buttons }: MouseEvent) {
   if (buttons !== 1) return;
@@ -29,6 +31,7 @@ function onResize({ buttons }: MouseEvent) {
   document.addEventListener('mouseup', e => {
     if (e.buttons & 1) return;
 
+    context?.value.onResize();
     controller.abort();
   }, { signal });
 };
