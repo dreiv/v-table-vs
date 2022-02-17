@@ -4,7 +4,6 @@ import { requestAnimationFrame } from '@/helpers';
 import { DataTableKey } from "../symbols";
 
 const handle = ref<HTMLDivElement | null>(null);
-const context = inject(DataTableKey);
 
 const moveHandle = requestAnimationFrame(({ clientX }: MouseEvent, offset: number) => {
   console.log('clientX', clientX);

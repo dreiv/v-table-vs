@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { provide, ref, PropType } from "vue";
+import { provide, ref, toRef, PropType } from "vue";
 
 import { DataTableHeader, DataTableRows } from "./sub-components";
 import { DataTableColumn, DataTableRow, DataTableKey } from ".";
@@ -17,7 +17,10 @@ const props = defineProps({
 
 provide(
   DataTableKey,
-  ref(props)
+  ref({
+    columns: toRef(props, "columns"),
+    rows: toRef(props, "rows"),
+  })
 );
 </script>
 

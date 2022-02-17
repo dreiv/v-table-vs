@@ -1,7 +1,7 @@
 import { DataTableColumn } from "@/ui/common";
 
 export const defaultColumns: DataTableColumn[] = [
-  { key: "company", text: "Company", width: 132 },
+  { key: "company", text: "Company", width: 140 },
   { key: "contact", text: "Contact", width: 120 },
   { key: "email", text: "Email", width: 256 },
   { key: "phone", text: "Phone", width: 96 },
