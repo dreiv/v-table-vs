@@ -46,6 +46,8 @@ function onResize({ buttons }: MouseEvent) {
       const updatedWidth = e.clientX - offset;
       context?.value.onResize(props.columnKey, updatedWidth);
       controller.abort();
+
+      handle.value && (handle.value.style.right = '0');
     },
     { signal }
   );

@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { provide, ref, toRef } from "vue";
 
-import { DataTableHeader, DataTableRows } from "./sub-components";
+import {
+  DataTableColumns,
+  DataTableHeader,
+  DataTableRows,
+} from "./sub-components";
 import { DataTableColumn, DataTableRow, DataTableKey } from ".";
 
 const props = defineProps<{
@@ -9,12 +13,16 @@ const props = defineProps<{
   rows: DataTableRow[];
 }>();
 
+const startWidth = props.columns.reduce((acc, { width }) => acc + width, 0);
+const tableWidth = ref(startWidth);
+
 const emit = defineEmits<{
   (e: "resize", columnKey: string, updatedWidth: number): void;
 }>();
 
 function onResize(columnKey: string, updatedWidth: number) {
   emit("resize", columnKey, updatedWidth);
+  tableWidth.value += updatedWidth;
 }
 
 provide(
@@ -28,7 +36,8 @@ provide(
 </script>
 
 <template>
-  <table :class="$style.dataTable">
+  <table :class="$style.dataTable" :style="{ width: `${tableWidth}px` }">
+    <data-table-columns />
     <data-table-header />
     <data-table-rows />
   </table>
@@ -38,6 +47,7 @@ provide(
 @import "@/ui/assets/styles/abstracts";
 
 .dataTable {
+  table-layout: fixed;
   position: relative;
 }
 </style>
