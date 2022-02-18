@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 
 import { API } from "@/mock/api";
-
-import { DataTableState } from "./types";
-import { defaultColumns } from "./defaults";
+import { setItem } from "@/helpers";
+import { USER_CONFIG, storedColumns } from "./storedColumns";
+import type { DataTableState } from "./types";
 
 export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
-    columns: defaultColumns,
+    columns: storedColumns,
     rows: [],
   }),
 
@@ -23,10 +23,24 @@ export const useDataTableStore = defineStore("dataTableStore", {
         column.key === columnKey
           ? {
               ...column,
-              width: column.width + updatedWidth,
+              config: {
+                width: column.config.width + updatedWidth,
+              },
             }
           : column
       );
+    },
+
+    persistOnUnload() {
+      window.addEventListener("beforeunload", () => {
+        setItem(
+          USER_CONFIG,
+          this.columns.map(({ key, config }) => ({
+            key,
+            config,
+          }))
+        );
+      });
     },
   },
 });

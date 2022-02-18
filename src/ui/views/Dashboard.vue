@@ -4,6 +4,7 @@ import { useDataTableStore } from "@/store";
 
 const store = useDataTableStore();
 store.fetchRows();
+store.persistOnUnload();
 
 function onResize(columnKey: string, updatedWidth: number) {
   console.log("resized", columnKey, updatedWidth);

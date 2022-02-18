@@ -7,6 +7,10 @@ const context = inject(DataTableKey);
 
 <template>
   <colgroup>
-    <col v-for="{ key, width } in context?.columns" :key="key" :width="width" />
+    <col
+      v-for="{ key, config: { width } } in context?.columns"
+      :key="key"
+      :width="width"
+    />
   </colgroup>
 </template>
