@@ -5,11 +5,6 @@ import { useDataTableStore } from "@/store";
 const store = useDataTableStore();
 store.fetchRows();
 store.persistOnUnload();
-
-function onResize(columnKey: string, updatedWidth: number) {
-  console.log("resized", columnKey, updatedWidth);
-  store.resizeColumn(columnKey, updatedWidth);
-}
 </script>
 
 <template>
@@ -21,7 +16,7 @@ function onResize(columnKey: string, updatedWidth: number) {
       <data-table
         :columns="store.columns"
         :rows="store.rows"
-        @resize="onResize"
+        @resize="store.resizeColumn"
       />
     </div>
   </main>

@@ -21,13 +21,13 @@ const context = inject(DataTableKey);
 </template>
 
 <style lang="scss" module>
-.header {
-  position: relative;
-}
-
 .sticky {
   position: sticky;
   top: 0;
   background-color: var(--surface);
+}
+
+.header {
+  position: relative;
 }
 </style>

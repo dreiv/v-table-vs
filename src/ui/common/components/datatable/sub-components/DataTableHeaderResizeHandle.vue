@@ -10,52 +10,41 @@ const props = defineProps<{ columnKey: string }>();
 
 const moveHandle = requestAnimationFrame(
   ({ clientX }: MouseEvent, offset: number) => {
-    console.log("clientX", clientX);
-    console.log("diff", clientX - offset);
-    console.log(
-      "handleOffset",
-      Math.round(handle.value?.getBoundingClientRect().x || 0)
-    );
-
-    handle.value && (handle.value.style.right = `${offset - clientX}px`);
+    handle.value!.style.right = `${offset - clientX}px`;
   }
 );
 
-function onResize({ buttons }: MouseEvent) {
-  if (buttons !== 1) return;
+function startResize({ buttons }: MouseEvent) {
+  if (buttons !== 1) return; // only consider left click
   const controller = new AbortController();
-  const { signal } = controller;
   const offset = Math.round(handle.value?.getBoundingClientRect().x || 0);
-  console.log("offset", offset);
 
   document.addEventListener(
     "mousemove",
     (e) => {
-      if (e.buttons !== 1) return;
+      if (e.buttons !== 1) return; // only consider left click
 
       moveHandle(e, offset);
     },
-    { signal }
+    { signal: controller.signal }
   );
 
   document.addEventListener(
     "mouseup",
-    (e) => {
-      if (e.buttons & 1) return;
+    ({ buttons, clientX }) => {
+      if (buttons & 1) return; // on left click release
 
-      const updatedWidth = e.clientX - offset;
-      context?.value.onResize(props.columnKey, updatedWidth);
+      context?.value.onResize(props.columnKey, clientX - offset);
+      handle.value!.style.right = "-8px";
       controller.abort();
-
-      handle.value && (handle.value.style.right = '0');
     },
-    { signal }
+    { signal: controller.signal }
   );
 }
 </script>
 
 <template>
-  <div ref="handle" :class="$style.handle" @mousedown="onResize" />
+  <div ref="handle" :class="$style.handle" @mousedown="startResize" />
 </template>
 
 <style lang="scss" module>
@@ -63,9 +52,9 @@ function onResize({ buttons }: MouseEvent) {
 
 $viewportHeight: 100vh;
 .handle {
-  @include absolute(0, -2px, 0, null);
+  @include absolute(0, -8px, 0, null);
 
-  width: 5px;
+  width: 16px;
   background-color: red;
 
   cursor: col-resize;

@@ -35,10 +35,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
       window.addEventListener("beforeunload", () => {
         setItem(
           USER_CONFIG,
-          this.columns.map(({ key, config }) => ({
-            key,
-            config,
-          }))
+          this.columns.map(({ key, config }) => ({ key, config }))
         );
       });
     },

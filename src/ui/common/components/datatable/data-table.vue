@@ -13,19 +13,19 @@ const props = defineProps<{
   rows: DataTableRow[];
 }>();
 
-const startWidth = props.columns.reduce(
-  (acc, { config: { width } }) => acc + width,
-  0
-);
-const tableWidth = ref(startWidth);
-
 const emit = defineEmits<{
   (e: "resize", columnKey: string, updatedWidth: number): void;
 }>();
 
+const initialWidth = props.columns.reduce(
+  (acc, { config: { width } }) => acc + width,
+  0
+);
+const tableWidth = ref(initialWidth);
+
 function onResize(columnKey: string, updatedWidth: number) {
-  emit("resize", columnKey, updatedWidth);
   tableWidth.value += updatedWidth;
+  emit("resize", columnKey, updatedWidth);
 }
 
 provide(
@@ -39,7 +39,7 @@ provide(
 </script>
 
 <template>
-  <table :class="$style.dataTable" :style="{ width: `${tableWidth}px` }">
+  <table :class="$style.dataTable" :width="tableWidth">
     <data-table-columns />
     <data-table-header />
     <data-table-rows />
@@ -51,6 +51,5 @@ provide(
 
 .dataTable {
   table-layout: fixed;
-  position: relative;
 }
 </style>
