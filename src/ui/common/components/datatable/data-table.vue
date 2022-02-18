@@ -13,7 +13,10 @@ const props = defineProps<{
   rows: DataTableRow[];
 }>();
 
-const startWidth = props.columns.reduce((acc, { width }) => acc + width, 0);
+const startWidth = props.columns.reduce(
+  (acc, { config: { width } }) => acc + width,
+  0
+);
 const tableWidth = ref(startWidth);
 
 const emit = defineEmits<{
