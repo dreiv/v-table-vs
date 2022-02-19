@@ -1,13 +1,11 @@
-import { DataTableColumn, DataTableRow } from "@/ui/common";
+import type { DataTableColumn, UserConfig, DataTableRow } from "@/ui/common";
 
 export interface DataTableState {
   columns: DataTableColumn[];
   rows: DataTableRow[];
 }
 
-export interface UserConfig {
+export interface SavedConfig {
   key: string;
-  config: {
-    width: number;
-  };
+  config: UserConfig;
 }

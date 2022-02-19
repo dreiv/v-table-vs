@@ -1,9 +1,12 @@
+export interface UserConfig {
+  width: number;
+  index: number;
+}
+
 export interface DataTableColumn {
   key: string;
   text: string;
-  config: {
-    width: number;
-  };
+  config: UserConfig;
 }
 
 export interface DataTableRow {

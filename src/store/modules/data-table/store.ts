@@ -18,17 +18,25 @@ export const useDataTableStore = defineStore("dataTableStore", {
       this.rows = records;
     },
 
-    resizeColumn(columnKey: string, updatedWidth: number) {
-      this.columns = this.columns.map((column) =>
-        column.key === columnKey
-          ? {
-              ...column,
-              config: {
-                width: column.config.width + updatedWidth,
-              },
-            }
-          : column
-      );
+    resizeColumn(columnKey: string, diff: number) {
+      const columnsCopy = [...this.columns];
+      const resizedIdx = this.columns.findIndex(({ key }) => key === columnKey);
+      columnsCopy[resizedIdx].config.width += diff;
+
+      this.columns = columnsCopy;
+    },
+
+    swapColumns(from: string, to: string) {
+      const columnsCopy = [...this.columns];
+      const fromIdx = this.columns.findIndex(({ key }) => key === from);
+      const toIdx = this.columns.findIndex(({ key }) => key === to);
+
+      [columnsCopy[fromIdx].config.index, columnsCopy[toIdx].config.index] = [
+        columnsCopy[toIdx].config.index,
+        columnsCopy[fromIdx].config.index,
+      ];
+
+      this.columns = columnsCopy;
     },
 
     persistOnUnload() {

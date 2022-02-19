@@ -17,6 +17,7 @@ store.persistOnUnload();
         :columns="store.columns"
         :rows="store.rows"
         @resize="store.resizeColumn"
+        @swap="store.swapColumns"
       />
     </div>
   </main>

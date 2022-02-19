@@ -14,7 +14,8 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "resize", columnKey: string, updatedWidth: number): void;
+  (e: "resize", columnKey: string, diff: number): void;
+  (e: "swap", from: string, to: string): void;
 }>();
 
 const initialWidth = props.columns.reduce(
@@ -23,9 +24,13 @@ const initialWidth = props.columns.reduce(
 );
 const tableWidth = ref(initialWidth);
 
-function onResize(columnKey: string, updatedWidth: number) {
-  tableWidth.value += updatedWidth;
-  emit("resize", columnKey, updatedWidth);
+function onResize(key: string, diff: number) {
+  tableWidth.value += diff;
+  emit("resize", key, diff);
+}
+
+function onSwap(from: string, to: string) {
+  emit("swap", from, to);
 }
 
 provide(
@@ -34,6 +39,7 @@ provide(
     columns: toRef(props, "columns"),
     rows: toRef(props, "rows"),
     onResize,
+    onSwap,
   })
 );
 </script>

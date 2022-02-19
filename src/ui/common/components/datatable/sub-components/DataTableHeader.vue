@@ -5,6 +5,16 @@ import DataTableHeaderResizeHandle from "./DataTableHeaderResizeHandle.vue";
 import { DataTableKey } from "../symbols";
 
 const context = inject(DataTableKey);
+const COLUMN_KEY = "column-key";
+
+function startDrag(evt: DragEvent, from: string) {
+  evt.dataTransfer?.setData(COLUMN_KEY, from);
+}
+
+function onDrop(evt: DragEvent, to: string) {
+  const from = evt.dataTransfer?.getData(COLUMN_KEY) || "";
+  context?.value.onSwap(from, to);
+}
 </script>
 
 <template>
@@ -13,9 +23,17 @@ const context = inject(DataTableKey);
       v-for="{ key, text } in context?.columns"
       :key="key"
       :class="$style.header"
+      @drop="onDrop($event, key)"
+      @dragover.prevent
     >
       <div :class="$style.container">
-        <div :class="$style.text">{{ text }}</div>
+        <div
+          :class="$style.title"
+          draggable="true"
+          @dragstart="startDrag($event, key)"
+        >
+          {{ text }}
+        </div>
         <div>↕</div>
         <data-table-header-resize-handle :columnKey="key" />
       </div>
@@ -41,7 +59,8 @@ const context = inject(DataTableKey);
   gap: 8px;
 }
 
-.text {
+.title {
   flex: 1;
+  cursor: grab;
 }
 </style>

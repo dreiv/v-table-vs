@@ -1,10 +1,11 @@
 import { InjectionKey, Ref } from "vue";
-import { DataTableColumn, DataTableRow } from "./types";
+import type { DataTableColumn, DataTableRow } from "./types";
 
 export interface DataTableContext {
   columns: DataTableColumn[];
   rows: DataTableRow[];
-  onResize: (columnKey: string, updatedWidth: number) => void;
+  onResize: (key: string, diff: number) => void;
+  onSwap: (from: string, to: string) => void;
 }
 
 export const DataTableKey: InjectionKey<Ref<DataTableContext>> = Symbol(
