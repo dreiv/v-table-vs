@@ -35,7 +35,7 @@ function startResize({ buttons }: MouseEvent) {
       if (buttons & 1) return; // on left click release
 
       context?.value.onResize(props.columnKey, clientX - offset);
-      handle.value!.style.right = "-8px";
+      handle.value!.style.right = "0";
       controller.abort();
     },
     { signal: controller.signal }
@@ -52,12 +52,12 @@ function startResize({ buttons }: MouseEvent) {
 
 $viewportHeight: 100vh;
 .handle {
-  @include absolute(0, -8px, 0, null);
+  @include absolute(0, 0, 0, null);
 
   width: 16px;
-  background-color: red;
+  background-color: var(--primary);
 
-  cursor: col-resize;
+  cursor: w-resize;
   user-select: none;
 
   &::after {
@@ -65,9 +65,12 @@ $viewportHeight: 100vh;
     @include margin-horiz(auto);
     content: "";
 
-    display: block;
-    box-shadow: 0 $viewportHeight 0 #000;
+    box-shadow: 0 $viewportHeight 0 var(--primary);
     margin-top: -$viewportHeight;
+  }
+
+  &:hover::after {
+    display: block;
   }
 }
 </style>

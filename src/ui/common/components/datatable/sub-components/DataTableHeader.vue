@@ -29,5 +29,7 @@ const context = inject(DataTableKey);
 
 .header {
   position: relative;
+
+  margin-right: -8px;
 }
 </style>
