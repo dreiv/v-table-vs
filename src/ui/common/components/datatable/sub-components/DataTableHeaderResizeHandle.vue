@@ -3,14 +3,15 @@ import { ref, inject } from "vue";
 import { requestAnimationFrame } from "@/helpers";
 import { DataTableKey } from "../symbols";
 
-const handle = ref<HTMLDivElement>();
 const context = inject(DataTableKey);
-
 const props = defineProps<{ columnKey: string }>();
+
+const handle = ref<HTMLDivElement>();
+const isActive = ref(false);
 
 const moveHandle = requestAnimationFrame(
   ({ clientX }: MouseEvent, offset: number) => {
-    handle.value!.style.right = `${offset - clientX}px`;
+    handle.value!.style.transform = `translateX(${clientX - offset - 8}px)`;
   }
 );
 
@@ -18,6 +19,7 @@ function startResize({ buttons }: MouseEvent) {
   if (buttons !== 1) return; // only consider left click
   const controller = new AbortController();
   const offset = Math.round(handle.value?.getBoundingClientRect().x || 0);
+  isActive.value = true;
 
   document.addEventListener(
     "mousemove",
@@ -35,7 +37,10 @@ function startResize({ buttons }: MouseEvent) {
       if (buttons & 1) return; // on left click release
 
       context?.value.onResize(props.columnKey, clientX - offset);
-      handle.value!.style.right = "0";
+
+      // cleanup
+      handle.value!.style.removeProperty("transform");
+      isActive.value = false;
       controller.abort();
     },
     { signal: controller.signal }
@@ -44,7 +49,11 @@ function startResize({ buttons }: MouseEvent) {
 </script>
 
 <template>
-  <div ref="handle" :class="$style.handle" @mousedown="startResize" />
+  <div
+    ref="handle"
+    :class="[{[$style.active]: isActive}, $style.handle]"
+    @mousedown="startResize"
+  />
 </template>
 
 <style lang="scss" module>
@@ -52,8 +61,6 @@ function startResize({ buttons }: MouseEvent) {
 
 $viewportHeight: 100vh;
 .handle {
-  @include absolute(0, 0, 0, null);
-
   width: 16px;
   background-color: var(--primary);
 
@@ -69,8 +76,11 @@ $viewportHeight: 100vh;
     margin-top: -$viewportHeight;
   }
 
-  &:hover::after {
-    display: block;
+  &.active,
+  &:hover {
+    &::after {
+      display: block;
+    }
   }
 }
 </style>

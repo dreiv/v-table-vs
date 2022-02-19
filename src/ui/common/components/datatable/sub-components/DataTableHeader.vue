@@ -14,8 +14,11 @@ const context = inject(DataTableKey);
       :key="key"
       :class="$style.header"
     >
-      {{ text }}
-      <data-table-header-resize-handle :columnKey="key" />
+      <div :class="$style.container">
+        <div :class="$style.text">{{ text }}</div>
+        <div>↕</div>
+        <data-table-header-resize-handle :columnKey="key" />
+      </div>
     </th>
   </tr>
 </template>
@@ -24,6 +27,7 @@ const context = inject(DataTableKey);
 .sticky {
   position: sticky;
   top: 0;
+
   background-color: var(--surface);
 }
 
@@ -31,5 +35,13 @@ const context = inject(DataTableKey);
   position: relative;
 
   margin-right: -8px;
+}
+.container {
+  display: flex;
+  gap: 8px;
+}
+
+.text {
+  flex: 1;
 }
 </style>
