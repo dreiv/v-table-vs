@@ -36,7 +36,9 @@ export const useDataTableStore = defineStore("dataTableStore", {
         columnsCopy[fromIdx].config.index,
       ];
 
-      this.columns = columnsCopy;
+      this.columns = columnsCopy.sort(
+        (a, b) => a.config!.index - b.config!.index
+      );
     },
 
     persistOnUnload() {
