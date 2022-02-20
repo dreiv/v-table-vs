@@ -16,6 +16,8 @@
   --background: #f6f8fa;
   --border-radius: 0.25rem;
 
+  --active: #dceefa;
+
   @include breakpoint(md) {
     --space-unit: 1.25em;
   }

@@ -4,14 +4,21 @@ import { requestAnimationFrame } from "@/helpers";
 import { DataTableKey } from "../symbols";
 
 const context = inject(DataTableKey);
-const props = defineProps<{ columnKey: string }>();
+const props = defineProps<{ columnKey: string; width: number }>();
 
 const handle = ref<HTMLDivElement>();
 const isActive = ref(false);
+let diff = 0;
 
 const moveHandle = requestAnimationFrame(
   ({ clientX }: MouseEvent, offset: number) => {
-    handle.value!.style.transform = `translateX(${clientX - offset - 8}px)`;
+    const { width } = props;
+    const min = 40 - width;
+    const max = 400 - width;
+    const handleOffset = clientX - offset - 8;
+    diff = Math.min(Math.max(handleOffset, min), max); // clamp resize
+
+    handle.value!.style.transform = `translateX(${diff}px)`;
   }
 );
 
@@ -33,10 +40,10 @@ function startResize({ buttons }: MouseEvent) {
 
   document.addEventListener(
     "mouseup",
-    ({ buttons, clientX }) => {
+    ({ buttons }) => {
       if (buttons & 1) return; // on left click release
 
-      context?.value.onResize(props.columnKey, clientX - offset);
+      context?.value.onResize(props.columnKey, diff);
 
       // cleanup
       handle.value!.style.removeProperty("transform");
@@ -51,7 +58,7 @@ function startResize({ buttons }: MouseEvent) {
 <template>
   <div
     ref="handle"
-    :class="[{[$style.active]: isActive}, $style.handle]"
+    :class="[{ [$style.active]: isActive }, $style.handle]"
     @mousedown="startResize"
   />
 </template>

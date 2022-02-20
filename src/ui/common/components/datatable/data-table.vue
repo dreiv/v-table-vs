@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "resize", columnKey: string, diff: number): void;
+  (e: "resize", key: string, diff: number): void;
   (e: "swap", from: string, to: string): void;
 }>();
 

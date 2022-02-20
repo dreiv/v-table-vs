@@ -18,9 +18,9 @@ export const useDataTableStore = defineStore("dataTableStore", {
       this.rows = records;
     },
 
-    resizeColumn(columnKey: string, diff: number) {
+    resizeColumn(key: string, diff: number) {
       const columnsCopy = [...this.columns];
-      const resizedIdx = this.columns.findIndex(({ key }) => key === columnKey);
+      const resizedIdx = this.columns.findIndex((col) => key === col.key);
       columnsCopy[resizedIdx].config.width += diff;
 
       this.columns = columnsCopy;

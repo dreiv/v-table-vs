@@ -10,11 +10,13 @@ const draggedColumn = ref();
 const targetColumn = ref();
 
 function startDrag(evt: DragEvent, from: string) {
-  evt.dataTransfer?.setData(COLUMN_KEY, draggedColumn.value = from);
+  evt.dataTransfer?.setData(COLUMN_KEY, (draggedColumn.value = from));
 }
 
 function onDrop(evt: DragEvent, to: string) {
   const from = evt.dataTransfer?.getData(COLUMN_KEY) as string;
+  if (to === from) return;
+
   context?.value.onSwap(from, to);
 }
 </script>
@@ -22,7 +24,7 @@ function onDrop(evt: DragEvent, to: string) {
 <template>
   <tr :class="$style.sticky">
     <th
-      v-for="{ key, text } in context?.columns"
+      v-for="{ key, text, config: { width } } in context?.columns"
       :key="key"
       :class="$style.header"
       @drop="onDrop($event, key)"
@@ -45,7 +47,7 @@ function onDrop(evt: DragEvent, to: string) {
           {{ text }}
         </div>
         <div>↕</div>
-        <data-table-header-resize-handle :columnKey="key" />
+        <data-table-header-resize-handle :columnKey="key" :width="width" />
       </div>
     </th>
   </tr>
@@ -63,8 +65,6 @@ function onDrop(evt: DragEvent, to: string) {
 
 .header {
   position: relative;
-
-  margin-right: -8px;
 }
 .container {
   display: flex;
@@ -79,8 +79,8 @@ function onDrop(evt: DragEvent, to: string) {
 $viewportHeight: 100vh;
 .isDropTarget::before {
   @include box(4px, $viewportHeight);
-  position: absolute;
   content: "";
+  position: absolute;
 
   box-shadow: 0 $viewportHeight 0 var(--primary);
   margin-top: -$viewportHeight;
@@ -88,6 +88,6 @@ $viewportHeight: 100vh;
 }
 
 .isDragged {
-  background-color: #dceefa;
+  background-color: var(--active);
 }
 </style>
