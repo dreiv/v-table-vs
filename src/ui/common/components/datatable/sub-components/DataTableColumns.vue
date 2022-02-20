@@ -12,5 +12,6 @@ const context = inject(DataTableKey);
       :key="key"
       :width="width"
     />
+    <col width="30">
   </colgroup>
 </template>

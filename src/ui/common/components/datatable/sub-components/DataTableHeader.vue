@@ -50,6 +50,7 @@ function onDrop(evt: DragEvent, to: string) {
         <data-table-header-resize-handle :columnKey="key" :width="width" />
       </div>
     </th>
+    <th :class="$style.settings"><button>⚙</button></th>
   </tr>
 </template>
 
@@ -74,6 +75,11 @@ function onDrop(evt: DragEvent, to: string) {
 .title {
   flex: 1;
   cursor: grab;
+}
+
+.settings {
+  position: sticky;
+  right: 0;
 }
 
 $viewportHeight: 100vh;
