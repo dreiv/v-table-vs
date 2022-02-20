@@ -6,16 +6,16 @@ import { DataTableKey } from "../symbols";
 
 const context = inject(DataTableKey);
 const COLUMN_KEY = "column-key";
+const draggedColumn = ref();
 const targetColumn = ref();
 
 function startDrag(evt: DragEvent, from: string) {
-  evt.dataTransfer?.setData(COLUMN_KEY, from);
+  evt.dataTransfer?.setData(COLUMN_KEY, draggedColumn.value = from);
 }
 
 function onDrop(evt: DragEvent, to: string) {
   const from = evt.dataTransfer?.getData(COLUMN_KEY) as string;
   context?.value.onSwap(from, to);
-  targetColumn.value = null;
 }
 </script>
 
@@ -31,6 +31,7 @@ function onDrop(evt: DragEvent, to: string) {
     >
       <div
         :class="[
+          { [$style.isDragged]: key === draggedColumn },
           { [$style.isDropTarget]: key === targetColumn },
           $style.container,
         ]"
@@ -39,7 +40,7 @@ function onDrop(evt: DragEvent, to: string) {
           :class="$style.title"
           draggable="true"
           @dragstart="startDrag($event, key)"
-          @dragend="targetColumn = null"
+          @dragend="draggedColumn = targetColumn = null"
         >
           {{ text }}
         </div>
@@ -77,10 +78,16 @@ function onDrop(evt: DragEvent, to: string) {
 
 $viewportHeight: 100vh;
 .isDropTarget::before {
-  @include box(3px, $viewportHeight);
+  @include box(4px, $viewportHeight);
+  position: absolute;
   content: "";
 
   box-shadow: 0 $viewportHeight 0 var(--primary);
   margin-top: -$viewportHeight;
+  opacity: 0.5;
+}
+
+.isDragged {
+  background-color: #dceefa;
 }
 </style>
