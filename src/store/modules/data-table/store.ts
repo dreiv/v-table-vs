@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
 
-import { API } from "@/mock/api";
 import { setItem } from "@/helpers";
 import { USER_CONFIG, storedColumns } from "./storedColumns";
 import type { DataTableState } from "./types";
+
+const apiUrl = new URL("http://127.0.0.1:4040");
 
 export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
@@ -13,7 +14,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
 
   actions: {
     async fetchRows() {
-      const { records } = await API.fetch();
+      const { records } = await (await fetch(apiUrl.href)).json();
 
       this.rows = records;
     },
