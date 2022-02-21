@@ -1,7 +1,9 @@
 const store = require("./data.json");
 
-const search = (query) => {
-  return store.slice(0, 100);
-};
+function search(pageNumber, pageSize) {
+  const offset = pageNumber * pageSize;
+
+  return store.slice(offset, pageSize);
+}
 
 module.exports = { search };

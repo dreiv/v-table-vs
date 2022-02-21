@@ -14,10 +14,10 @@ http
       "Content-Type": "text/html",
       "Access-Control-Allow-Origin": "*",
     });
-    const records = search();
+    const records = search(pageNumber, pageSize);
+    const response = JSON.stringify({ records, pageNumber, pageSize });
 
-    const response = { records };
-    res.end(JSON.stringify(response));
+    res.end(response);
   })
   .listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
