@@ -3,7 +3,7 @@ import { DataTable } from "@/ui/common";
 import { useDataTableStore } from "@/store";
 
 const store = useDataTableStore();
-store.fetchRows();
+store.fetchRows('type');
 store.persistOnUnload();
 </script>
 

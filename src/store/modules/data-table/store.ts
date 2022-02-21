@@ -13,7 +13,8 @@ export const useDataTableStore = defineStore("dataTableStore", {
   }),
 
   actions: {
-    async fetchRows() {
+    async fetchRows(sortBy: string) {
+      apiUrl.searchParams.append("sortBy", sortBy);
       const { records } = await (await fetch(apiUrl.href)).json();
 
       this.rows = records;

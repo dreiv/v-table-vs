@@ -8,13 +8,17 @@ const port = 4040;
 
 http
   .createServer((req, res) => {
-    const { pageNumber = 0, pageSize = 100 } = url.parse(req.url, true).query;
+    const {
+      pageNumber = 0,
+      pageSize = 100,
+      sortBy,
+    } = url.parse(req.url, true).query;
 
     res.writeHead(200, {
       "Content-Type": "text/html",
       "Access-Control-Allow-Origin": "*",
     });
-    const records = search(pageNumber, pageSize);
+    const records = search(pageNumber, pageSize, sortBy);
     const response = JSON.stringify({ records, pageNumber, pageSize });
 
     res.end(response);
