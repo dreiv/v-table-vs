@@ -53,8 +53,6 @@ provide(
 </template>
 
 <style lang="scss" module>
-@import "@/ui/assets/styles/abstracts";
-
 .dataTable {
   table-layout: fixed;
   border-collapse: collapse;

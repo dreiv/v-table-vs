@@ -8,7 +8,16 @@ const context = inject(DataTableKey);
 <template>
   <tbody>
     <tr v-for="row in context?.rows" :key="row.id">
-      <td v-for="{ key } in context?.columns" :key="key">{{ row[key] }}</td>
+      <td v-for="{ key } in context?.columns" :key="key" :class="$style.td">
+        {{ row[key] }}
+      </td>
     </tr>
   </tbody>
 </template>
+
+<style lang="scss" module>
+@import "@/ui/assets/styles/abstracts";
+.td {
+  @include trim;
+}
+</style>
