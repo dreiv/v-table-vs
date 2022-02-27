@@ -22,36 +22,38 @@ function onDrop(evt: DragEvent, to: string) {
 </script>
 
 <template>
-  <tr :class="$style.sticky">
-    <th
-      v-for="{ key, text, config: { width } } in context?.columns"
-      :key="key"
-      :class="$style.header"
-      @drop="onDrop($event, key)"
-      @dragover.prevent="targetColumn = key"
-      @dragleave="targetColumn = null"
-    >
-      <div
-        :class="[
-          { [$style.isDragged]: key === draggedColumn },
-          { [$style.isDropTarget]: key === targetColumn },
-          $style.container,
-        ]"
+  <thead>
+    <tr :class="$style.sticky">
+      <th
+        v-for="{ key, text, config: { width } } in context?.columns"
+        :key="key"
+        :class="$style.header"
+        @drop="onDrop($event, key)"
+        @dragover.prevent="targetColumn = key"
+        @dragleave="targetColumn = null"
       >
         <div
-          :class="$style.title"
-          draggable="true"
-          @dragstart="startDrag($event, key)"
-          @dragend="draggedColumn = targetColumn = null"
+          :class="[
+            { [$style.isDragged]: key === draggedColumn },
+            { [$style.isDropTarget]: key === targetColumn },
+            $style.container,
+          ]"
         >
-          {{ text }}
+          <div
+            :class="$style.title"
+            draggable="true"
+            @dragstart="startDrag($event, key)"
+            @dragend="draggedColumn = targetColumn = null"
+          >
+            {{ text }}
+          </div>
+          <div>↕</div>
+          <data-table-header-resize-handle :columnKey="key" :width="width" />
         </div>
-        <div>↕</div>
-        <data-table-header-resize-handle :columnKey="key" :width="width" />
-      </div>
-    </th>
-    <th :class="$style.settings"><button>⚙</button></th>
-  </tr>
+      </th>
+      <th :class="$style.settings"><button>⚙</button></th>
+    </tr>
+  </thead>
 </template>
 
 <style lang="scss" module>

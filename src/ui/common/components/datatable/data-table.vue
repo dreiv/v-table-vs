@@ -57,5 +57,6 @@ provide(
 
 .dataTable {
   table-layout: fixed;
+  border-collapse: collapse;
 }
 </style>
