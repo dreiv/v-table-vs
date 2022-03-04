@@ -76,7 +76,9 @@ function onDrop(evt: DragEvent, to: string) {
 
 .title {
   flex: 1;
+
   cursor: grab;
+  touch-action: none;
 }
 
 .settings {

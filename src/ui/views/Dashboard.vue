@@ -1,9 +1,11 @@
 <script setup lang="ts">
+
 import { DataTable } from "@/ui/common";
 import { useDataTableStore } from "@/store";
 
 const store = useDataTableStore();
-store.fetchRows('type');
+
+store.fetchRows("type");
 store.persistOnUnload();
 </script>
 
