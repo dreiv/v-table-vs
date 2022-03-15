@@ -18,11 +18,9 @@ const emit = defineEmits<{
   (e: "swap", from: string, to: string): void;
 }>();
 
-const initialWidth = props.columns.reduce(
-  (acc, { config: { width } }) => acc + width,
-  0
+const tableWidth = ref(
+  props.columns.reduce((acc, { config: { width } }) => acc + width, 0)
 );
-const tableWidth = ref(initialWidth);
 
 function onResize(key: string, diff: number) {
   tableWidth.value += diff;

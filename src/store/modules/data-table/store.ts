@@ -21,26 +21,20 @@ export const useDataTableStore = defineStore("dataTableStore", {
     },
 
     resizeColumn(key: string, diff: number) {
-      const columnsCopy = [...this.columns];
-      const resizedIdx = this.columns.findIndex((col) => key === col.key);
-      columnsCopy[resizedIdx].config.width += diff;
+      const cols = [...this.columns];
+      const resizedCfg = cols.find((c) => key === c.key)!.config;
+      resizedCfg.width += diff;
 
-      this.columns = columnsCopy;
+      this.columns = cols;
     },
 
     swapColumns(from: string, to: string) {
-      const columnsCopy = [...this.columns];
-      const fromIdx = this.columns.findIndex(({ key }) => key === from);
-      const toIdx = this.columns.findIndex(({ key }) => key === to);
+      const cols = [...this.columns];
+      const fromCfg = cols.find(({ key }) => key === from)!.config;
+      const toCfg = cols.find(({ key }) => key === to)!.config;
 
-      [columnsCopy[fromIdx].config.index, columnsCopy[toIdx].config.index] = [
-        columnsCopy[toIdx].config.index,
-        columnsCopy[fromIdx].config.index,
-      ];
-
-      this.columns = columnsCopy.sort(
-        (a, b) => a.config!.index - b.config!.index
-      );
+      [fromCfg.index, toCfg.index] = [toCfg.index, fromCfg.index];
+      this.columns = cols.sort((a, b) => a.config!.index - b.config!.index);
     },
 
     persistOnUnload() {

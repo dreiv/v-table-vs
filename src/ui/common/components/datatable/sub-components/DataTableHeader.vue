@@ -14,7 +14,7 @@ function startDrag(evt: DragEvent, from: string) {
 }
 
 function onDrop(evt: DragEvent, to: string) {
-  const from = evt.dataTransfer?.getData(COLUMN_KEY) as string;
+  const from = evt.dataTransfer?.getData(COLUMN_KEY)!;
   if (to === from) return;
 
   context?.value.onSwap(from, to);
@@ -23,11 +23,10 @@ function onDrop(evt: DragEvent, to: string) {
 
 <template>
   <thead>
-    <tr :class="$style.sticky">
+    <tr :class="$style.header">
       <th
         v-for="{ key, text, config: { width } } in context?.columns"
         :key="key"
-        :class="$style.header"
         @drop="onDrop($event, key)"
         @dragover.prevent="targetColumn = key"
         @dragleave="targetColumn = null"
@@ -59,16 +58,13 @@ function onDrop(evt: DragEvent, to: string) {
 <style lang="scss" module>
 @import "@/ui/assets/styles/abstracts";
 
-.sticky {
+.header {
   position: sticky;
   top: 0;
 
   background-color: var(--surface);
 }
 
-.header {
-  position: relative;
-}
 .container {
   display: flex;
   gap: 8px;
