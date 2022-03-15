@@ -13,7 +13,7 @@ let diff = 0;
 const moveHandle = requestAnimationFrame(
   ({ clientX }: MouseEvent, offset: number) => {
     const { width } = props;
-    const min = 40 - width;
+    const min = 80 - width;
     const max = 400 - width;
     const handleOffset = clientX - offset - 8;
     diff = Math.min(Math.max(handleOffset, min), max); // clamp resize
@@ -73,6 +73,7 @@ $viewportHeight: 100vh;
 
   cursor: w-resize;
   user-select: none;
+  flex-shrink: 0;
 
   &::after {
     @include box(1px, $viewportHeight);
