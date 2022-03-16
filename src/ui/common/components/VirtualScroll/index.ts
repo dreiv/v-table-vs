@@ -1,2 +1,2 @@
-export { default as VirtualScroll } from "./virtualScroll.vue";
+export { default as VirtualScroll } from "./virtual-scroll.vue";
 export * from "./types";
