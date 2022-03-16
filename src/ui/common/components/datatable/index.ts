@@ -1,3 +1,3 @@
-export { default as DataTable } from "./index.vue";
+export { default as DataTable } from "./dataTable.vue";
 export * from "./types";
 export * from "./symbols";

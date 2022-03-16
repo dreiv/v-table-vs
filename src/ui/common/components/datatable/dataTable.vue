@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { provide, ref, toRef } from "vue";
 
+import { VirtualScroll } from "@/ui/common";
 import {
   DataTableColumns,
   DataTableHeader,
@@ -43,11 +44,13 @@ provide(
 </script>
 
 <template>
-  <table :class="$style.dataTable" :width="tableWidth">
-    <data-table-columns />
-    <data-table-header />
-    <data-table-rows />
-  </table>
+  <virtual-scroll>
+    <table :class="$style.dataTable" :width="tableWidth">
+      <data-table-columns />
+      <data-table-header />
+      <data-table-rows />
+    </table>
+  </virtual-scroll>
 </template>
 
 <style lang="scss" module>
