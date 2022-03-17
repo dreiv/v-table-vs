@@ -13,14 +13,13 @@ store.persistOnUnload();
     <h1>Table</h1>
   </header>
   <main :class="$style.main">
-    <div :class="$style.wrapper">
-      <data-table
-        :columns="store.columns"
-        :rows="store.rows"
-        @resize="store.resizeColumn"
-        @swap="store.swapColumns"
-      />
-    </div>
+    <data-table
+      :class="$style.cover"
+      :columns="store.columns"
+      :rows="store.rows"
+      @resize="store.resizeColumn"
+      @swap="store.swapColumns"
+    />
   </main>
   <footer>Footer</footer>
 </template>
@@ -34,8 +33,7 @@ store.persistOnUnload();
   background-color: var(--surface);
 }
 
-.wrapper {
+.cover {
   @include absolute(0, 0);
-  overflow: auto;
 }
 </style>

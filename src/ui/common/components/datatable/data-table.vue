@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { provide, ref, toRef } from "vue";
 
+import { useVirtualScroll } from "@/ui/common";
 import {
   DataTableColumns,
   DataTableHeader,
@@ -22,6 +23,12 @@ const tableWidth = ref(
   props.columns.reduce((acc, { config: { width } }) => acc + width, 0)
 );
 
+const viewport = ref();
+const vScroll = useVirtualScroll(viewport, {
+  count: props.rows.length,
+  itemHeight: 20,
+});
+
 function onResize(key: string, diff: number) {
   tableWidth.value += diff;
   emit("resize", key, diff);
@@ -36,6 +43,7 @@ provide(
   ref({
     columns: toRef(props, "columns"),
     rows: toRef(props, "rows"),
+    vScroll,
     onResize,
     onSwap,
   })
@@ -43,16 +51,22 @@ provide(
 </script>
 
 <template>
-  <table :class="$style.dataTable" :width="tableWidth">
-    <data-table-columns />
-    <data-table-header />
-    <data-table-rows />
-  </table>
+  <div :class="$style.viewport" ref="viewport">
+    <table :class="$style.dataTable" :width="tableWidth">
+      <data-table-columns />
+      <data-table-header />
+      <data-table-rows />
+    </table>
+  </div>
 </template>
 
 <style lang="scss" module>
 .dataTable {
   table-layout: fixed;
   border-collapse: collapse;
+}
+
+.viewport {
+  overflow: auto;
 }
 </style>
