@@ -1,23 +1,50 @@
 import { defineStore } from "pinia";
 
+import { Direction } from "@/ui/common";
 import { setItem } from "@/helpers";
+import { loadRecords } from "@/services";
 import { USER_CONFIG, storedColumns } from "./storedColumns";
 import type { DataTableState } from "./types";
-
-const apiUrl = new URL("http://127.0.0.1:4040");
 
 export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
     columns: storedColumns,
     rows: [],
+    shownRows: [],
+    total: 0,
   }),
 
   actions: {
-    async fetchRows(sortBy: string) {
-      apiUrl.searchParams.append("sortBy", sortBy);
-      const { records } = await (await fetch(apiUrl.href)).json();
+    async fetchRows(offset: number, count: number, direction: Direction) {
+      if (!this.rows.length) {
+        this.rows = Array.from({ length: count }, (_, index) => ({
+          id: index.toString(),
+          loading: true,
+        }));
+        this.total = count;
+      }
+      const start = Math.max(0, offset);
+      const end = Math.min(offset + count, this.total);
+      this.shownRows = this.rows.slice(start, end);
 
-      this.rows = records;
+      if (this.shownRows.find(({ loading }) => loading)) {
+        const { records, total } = await loadRecords(
+          start,
+          end,
+          this.total,
+          direction
+        );
+        this.total = total;
+        if (!this.rows.length) {
+          this.rows = Array.from({ length: total }, (_, index) => ({
+            id: index.toString(),
+            loading: true,
+          }));
+        }
+
+        this.rows.splice(start, end - count, ...records);
+        this.shownRows = this.rows.slice(start, end);
+      }
     },
 
     resizeColumn(key: string, diff: number) {

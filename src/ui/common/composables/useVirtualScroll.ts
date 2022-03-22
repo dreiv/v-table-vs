@@ -14,9 +14,10 @@ export function useVirtualScroll(
   const offset = ref(0);
   let el: HTMLElement;
 
-  let lastScrollTop = 0;
+  let lastScrollTop = -1;
   const onScroll: any = requestAnimationFrame(
     ({ target: { scrollTop } }: any) => {
+      if (scrollTop === lastScrollTop) return;
       const dirrection: Direction = scrollTop > lastScrollTop ? "down" : "up";
       lastScrollTop = Math.max(scrollTop, 0); // For Mobile or negative scrolling
 

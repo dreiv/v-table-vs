@@ -3,8 +3,6 @@ import { DataTable } from "@/ui/common";
 import { useDataTableStore } from "@/store";
 
 const store = useDataTableStore();
-
-store.fetchRows("type");
 store.persistOnUnload();
 </script>
 
@@ -16,7 +14,9 @@ store.persistOnUnload();
     <data-table
       :class="$style.cover"
       :columns="store.columns"
-      :rows="store.rows"
+      :rows="store.shownRows"
+      :total="store.total"
+      @fetch-rows="store.fetchRows"
       @resize="store.resizeColumn"
       @swap="store.swapColumns"
     />

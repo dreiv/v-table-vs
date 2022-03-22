@@ -18,7 +18,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "resize", key: string, diff: number): void;
   (e: "swap", from: string, to: string): void;
-  (e: "getItems", offset: number, count: number, direction: Direction): void;
+  (e: "fetchRows", offset: number, count: number, direction: Direction): void;
 }>();
 
 const tableWidth = ref(
@@ -29,11 +29,11 @@ const viewport = ref();
 const vScroll = useVirtualScroll(viewport, {
   count: props.rows.length,
   itemHeight: 26,
-  getItems
+  getItems: fetchRows
 });
 
-function getItems(offset: number, count: number, direction: Direction) {
-  emit('getItems', offset, count, direction)
+function fetchRows(offset: number, count: number, direction: Direction) {
+  emit('fetchRows', offset, count, direction)
 }
 
 function onResize(key: string, diff: number) {

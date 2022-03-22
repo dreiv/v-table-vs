@@ -1,18 +1,15 @@
 const store = require("./data.json");
 const { indexes } = require("./indexes.js");
 
-function search(pageNumber, pageSize, sortBy) {
+function search(from, to, sortBy) {
   if (!sortBy) return;
-  const offset = pageNumber * pageSize;
 
-  return indexes[sortBy].slice(offset, pageSize).map((index) => store[index]);
+  return {
+    records: indexes[sortBy]
+      .slice(from, to - from)
+      .map((index) => store[index]),
+    total: indexes[sortBy].length,
+  };
 }
-
-// function search() {
-//   return store
-//     .map((item, index) => ({ ...item, index }))
-//     .sort((a, b) => a.type.localeCompare(b.type))
-//     .map(({index}) => index);
-// }
 
 module.exports = { search };
