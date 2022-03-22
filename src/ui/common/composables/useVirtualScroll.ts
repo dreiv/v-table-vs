@@ -23,7 +23,7 @@ export function useVirtualScroll(
 
       offset.value = Math.floor((scrollTop - toleranceHeight) / itemHeight);
       beforeHeight.value = Math.max(offset.value * itemHeight, 0);
-      const afterItemsCount = count - offset.value - itemsCount.value;
+      const afterItemsCount = count.value - offset.value - itemsCount.value;
       afterHeight.value = Math.max(afterItemsCount * itemHeight, 0);
       getItems(offset.value, itemsCount.value, dirrection);
     }

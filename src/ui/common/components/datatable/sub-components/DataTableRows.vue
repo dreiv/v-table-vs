@@ -9,7 +9,13 @@ const context = inject(DataTableKey);
   <tbody>
     <tr :height="context?.vScroll.beforeHeight"></tr>
     <tr v-for="row in context?.rows" :key="row.id">
-      <td v-for="{ key } in context?.columns" :key="key" :class="$style.td">
+      <td v-if="row.loading">loading...</td>
+      <td
+        v-else
+        v-for="{ key } in context?.columns"
+        :key="key"
+        :class="$style.td"
+      >
         {{ row[key] }}
       </td>
     </tr>

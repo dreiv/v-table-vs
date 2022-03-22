@@ -27,7 +27,7 @@ const tableWidth = ref(
 
 const viewport = ref();
 const vScroll = useVirtualScroll(viewport, {
-  count: props.rows.length,
+  count: toRef(props, 'total'),
   itemHeight: 26,
   getItems: fetchRows
 });
