@@ -5,9 +5,7 @@ function search(from, to, sortBy) {
   if (!sortBy) return;
 
   return {
-    records: indexes[sortBy]
-      .slice(from, to - from)
-      .map((index) => store[index]),
+    records: indexes[sortBy].slice(from, to).map((index) => store[index]),
     total: indexes[sortBy].length,
   };
 }

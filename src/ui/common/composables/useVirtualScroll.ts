@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { debounced, requestAnimationFrame } from "@/helpers";
 import { Direction } from "@/ui/common";
 
@@ -9,7 +9,6 @@ export function useVirtualScroll(
   const tolerance = 2;
   const toleranceHeight = tolerance * itemHeight;
   const beforeHeight = ref(0);
-  const afterHeight = ref(0);
   const itemsCount = ref();
   const offset = ref(0);
   let el: HTMLElement;
@@ -18,14 +17,12 @@ export function useVirtualScroll(
   const onScroll: any = requestAnimationFrame(
     ({ target: { scrollTop } }: any) => {
       if (scrollTop === lastScrollTop) return;
-      const dirrection: Direction = scrollTop > lastScrollTop ? "down" : "up";
+      const direction: Direction = scrollTop > lastScrollTop ? "down" : "up";
       lastScrollTop = Math.max(scrollTop, 0); // For Mobile or negative scrolling
 
       offset.value = Math.floor((scrollTop - toleranceHeight) / itemHeight);
       beforeHeight.value = Math.max(offset.value * itemHeight, 0);
-      const afterItemsCount = count.value - offset.value - itemsCount.value;
-      afterHeight.value = Math.max(afterItemsCount * itemHeight, 0);
-      getItems(offset.value, itemsCount.value, dirrection);
+      getItems(offset.value, itemsCount.value, direction);
     }
   );
 
@@ -53,6 +50,12 @@ export function useVirtualScroll(
   onUnmounted(() => {
     resizeObserver.disconnect();
     controller.abort();
+  });
+
+  const afterHeight = computed(() => {
+    const afterItemsCount = count.value - offset.value - itemsCount.value;
+
+    return Math.max(afterItemsCount * itemHeight, 0);
   });
 
   return { beforeHeight, afterHeight };

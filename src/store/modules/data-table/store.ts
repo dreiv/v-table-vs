@@ -35,7 +35,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
           direction
         );
         this.total = total;
-        if (!this.rows.length) {
+        if (this.rows.length !== total) {
           this.rows = Array.from({ length: total }, (_, index) => ({
             id: index.toString(),
             loading: true,
