@@ -16,7 +16,10 @@ http
     });
 
     const response = JSON.stringify(search(from, to, sortBy));
-    res.end(response);
+
+    setTimeout(() => {
+      res.end(response);
+    }, Math.random() * 500 + 300);
   })
   .listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
