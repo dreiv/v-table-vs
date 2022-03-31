@@ -27,13 +27,13 @@ const tableWidth = ref(
 
 const viewport = ref();
 const vScroll = useVirtualScroll(viewport, {
-  count: toRef(props, 'total'),
+  total: toRef(props, "total"),
   itemHeight: 26,
-  getItems: fetchRows
+  getItems: fetchRows,
 });
 
 function fetchRows(offset: number, count: number, direction: Direction) {
-  emit('fetchRows', offset, count, direction)
+  emit("fetchRows", offset, count, direction);
 }
 
 function onResize(key: string, diff: number) {

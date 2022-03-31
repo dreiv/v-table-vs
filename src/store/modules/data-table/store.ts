@@ -6,6 +6,13 @@ import { loadRecords } from "@/services";
 import { USER_CONFIG, storedColumns } from "./storedColumns";
 import type { DataTableState } from "./types";
 
+function initArray(length: number) {
+  return Array.from({ length }, (_, index) => ({
+    id: index.toString(),
+    loading: true,
+  }));
+}
+
 let timeout: any;
 export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
@@ -19,10 +26,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
     fetchRows(offset: number, count: number, direction: Direction) {
       clearTimeout(timeout);
       if (!this.rows.length) {
-        this.rows = Array.from({ length: count }, (_, index) => ({
-          id: index.toString(),
-          loading: true,
-        }));
+        this.rows = initArray(count);
         this.total = count;
       }
       const start = Math.max(0, offset);
@@ -39,13 +43,10 @@ export const useDataTableStore = defineStore("dataTableStore", {
           );
           this.total = total;
           if (this.rows.length !== total) {
-            this.rows = Array.from({ length: total }, (_, index) => ({
-              id: index.toString(),
-              loading: true,
-            }));
+            this.rows = initArray(total);
           }
 
-          this.rows.splice(start, end - count, ...records);
+          this.rows.splice(start, records.length, ...records);
           this.shownRows = this.rows.slice(start, end);
         }, 300);
       }

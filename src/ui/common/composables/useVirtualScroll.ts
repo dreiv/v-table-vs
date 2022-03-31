@@ -4,34 +4,33 @@ import { Direction } from "@/ui/common";
 
 export function useVirtualScroll(
   viewportRef: any,
-  { count, itemHeight, getItems }: any
+  { total, itemHeight, getItems }: any
 ) {
   const tolerance = 2;
   const toleranceHeight = tolerance * itemHeight;
   const beforeHeight = ref(0);
-  const itemsCount = ref();
+  const count = ref();
   const offset = ref(0);
   let el: HTMLElement;
 
   let lastScrollTop = -1;
   const onScroll: any = requestAnimationFrame(
     ({ target: { scrollTop } }: any) => {
-      if (scrollTop === lastScrollTop) return;
+      if (scrollTop === lastScrollTop) return; // ignore horizontal scroll
       const direction: Direction = scrollTop > lastScrollTop ? "down" : "up";
       lastScrollTop = Math.max(scrollTop, 0); // For Mobile or negative scrolling
 
       offset.value = Math.floor((scrollTop - toleranceHeight) / itemHeight);
       beforeHeight.value = Math.max(offset.value * itemHeight, 0);
-      getItems(offset.value, itemsCount.value, direction);
+      getItems(offset.value, count.value, direction);
     }
   );
 
   const onResize = debounced(() => {
-    const prevItemsCount = itemsCount.value;
-    itemsCount.value = Math.floor(el.clientHeight / itemHeight) + 2 * tolerance;
+    const prevcount = count.value;
+    count.value = Math.floor(el.clientHeight / itemHeight) + 2 * tolerance;
 
-    if (prevItemsCount !== itemsCount.value)
-      getItems(offset.value, itemsCount.value, "down");
+    if (prevcount !== count.value) getItems(offset.value, count.value, "down");
   });
 
   let resizeObserver = new ResizeObserver(onResize);
@@ -53,9 +52,9 @@ export function useVirtualScroll(
   });
 
   const afterHeight = computed(() => {
-    const afterItemsCount = count.value - offset.value - itemsCount.value;
+    const aftercount = total.value - offset.value - count.value;
 
-    return Math.max(afterItemsCount * itemHeight, 0);
+    return Math.max(aftercount * itemHeight, 0);
   });
 
   return { beforeHeight, afterHeight };
