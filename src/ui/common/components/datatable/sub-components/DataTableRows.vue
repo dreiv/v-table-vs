@@ -8,14 +8,13 @@ const rows = computed(() => {
 
   return !groupBy
     ? rows
-    : rows.map((row, idx) => {
-        // TODO: find why this gets called so often
-        if (!row.loading && (!idx || rows[idx - 1][groupBy] !== row[groupBy])) {
-          row.isHeader = true;
-        }
-
-        return row;
-      });
+    : rows.map((row, idx) => ({
+        ...row,
+        ...(!row.loading &&
+          (!idx || rows[idx - 1][groupBy] !== row[groupBy]) && {
+            isHeader: true,
+          }),
+      }));
 });
 </script>
 
