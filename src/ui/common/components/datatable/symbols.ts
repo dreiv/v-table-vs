@@ -4,6 +4,7 @@ import type { DataTableColumn, DataTableRow } from "./types";
 export interface DataTableContext {
   columns: DataTableColumn[];
   rows: DataTableRow[];
+  groupBy: string;
   vScroll: {
     beforeHeight: number;
     afterHeight: number;

@@ -13,6 +13,7 @@ const props = defineProps<{
   columns: DataTableColumn[];
   rows: DataTableRow[];
   total: number;
+  groupBy?: string;
 }>();
 
 const emit = defineEmits<{
@@ -50,6 +51,7 @@ provide(
   ref({
     columns: toRef(props, "columns"),
     rows: toRef(props, "rows"),
+    groupBy: toRef(props, "groupBy"),
     vScroll,
     onResize,
     onSwap,
